@@ -1,0 +1,2 @@
+[servidor]
+localhost vmnginx ansible_host=local ansible_user=vagrant ansible_password=vagrant ansible_become=true

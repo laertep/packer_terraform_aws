@@ -1,0 +1,38 @@
+  {
+  "builders": [
+    {
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-09cd747c78a9add63",
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "nginx_api_cep_packer",
+    "ami_description": "Provisiona API CEP",
+    "associate_public_ip_address": true,
+    "tags": {
+      "Name": "api_cep"
+    }
+  }
+],
+"provisioners": [
+  {
+  
+    "type": "file",
+    "source": "./ansible",
+    "destination": "/tmp/ansible"
+  },
+  { 
+    "type": "shell",
+    "inline": [
+    "ls /tmp", 
+    "ls /tmp/ansible", 
+    "sudo apt update",
+    "sudo apt install ansible -y", 
+    "ansible-playbook --connection=local /tmp/ansible/playbook.yml"
+  ]
+  }
+  ]
+
+}
